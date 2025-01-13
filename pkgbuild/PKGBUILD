@@ -17,7 +17,6 @@ elif [ -e "pkgbuild.install" ]; then
     install=pkgbuild.install
 fi
 
-
 prepare() {
     cd "${srcdir}/${pkgname}"
     # No preparation steps needed
@@ -38,8 +37,11 @@ package() {
     # Copy all wallpapers to /usr/share/backgrounds/community
     cp -af usr/share/backgrounds/community/* "${pkgdir}/usr/share/backgrounds/community/"
 
-    # Create or overwrite wall*.png files using animal-hpr-001.jpg
+    # Remove existing wall*.png files before copying
     for i in {0..2}; do
+        if [ -f "${pkgdir}/usr/share/hypr/wall${i}.png" ]; then
+            rm -f "${pkgdir}/usr/share/hypr/wall${i}.png"
+        fi
         cp -f usr/share/backgrounds/community/animal-hpr-001.jpg "${pkgdir}/usr/share/hypr/wall${i}.png"
     done
 
