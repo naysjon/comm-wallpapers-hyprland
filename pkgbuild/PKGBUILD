@@ -35,16 +35,8 @@ package() {
     install -dm755 "${pkgdir}/usr/share/backgrounds/community"
 
     # Copy all wallpapers to /usr/share/backgrounds/community
-    cp -af usr/share/backgrounds/community/* "${pkgdir}/usr/share/backgrounds/community/"
-
-    # Remove existing wall*.png files before copying
-    for i in {0..2}; do
-        if [ -f "${pkgdir}/usr/share/hypr/wall${i}.png" ]; then
-            rm -f "${pkgdir}/usr/share/hypr/wall${i}.png"
-        fi
-        cp -f usr/share/backgrounds/community/animal-hpr-001.jpg "${pkgdir}/usr/share/hypr/wall${i}.png"
-    done
-
+    rsync -a --ignore-existing usr/share/backgrounds/community/ "${pkgdir}/usr/share/backgrounds/community/"
+    
     # Install license file if present
     if [ -f "LICENSE" ]; then
         install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
