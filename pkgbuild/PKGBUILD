@@ -36,11 +36,11 @@ package() {
     install -dm755 "${pkgdir}/usr/share/backgrounds/community"
 
     # Copy all wallpapers to /usr/share/backgrounds/community
-    cp -a usr/share/backgrounds/community/* "${pkgdir}/usr/share/backgrounds/community/"
+    cp -af usr/share/backgrounds/community/* "${pkgdir}/usr/share/backgrounds/community/"
 
-    # Create wall*.png files using animal-hpr-001.jpg
+    # Create or overwrite wall*.png files using animal-hpr-001.jpg
     for i in {0..2}; do
-        install -m644 usr/share/backgrounds/community/animal-hpr-001.jpg "${pkgdir}/usr/share/hypr/wall${i}.png"
+        cp -f usr/share/backgrounds/community/animal-hpr-001.jpg "${pkgdir}/usr/share/hypr/wall${i}.png"
     done
 
     # Install license file if present
