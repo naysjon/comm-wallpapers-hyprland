@@ -1,63 +1,38 @@
-# Maintainer: Tales A. Mendonça <talesam@gmail.com>
+# Maintainer: Leonardo Berbert <leo4berbert@gmail.com>
 
-pkgname=pkgbuild-template
-pkgdesc="Package template for Communitybig"
-# Uncomment and edit the following lines as needed
-#depends=('')
-#makedepends=('')
-#optdepends=('')
-#conflicts=('')
-#provides=('')
-#replaces=('')
+pkgname=comm-wallpapers-hyprland
+pkgdesc="Custom wallpapers for Hyprland in BigCommunity distribution"
 pkgver=$(date +%y.%m.%d)
 pkgrel=$(date +%H%M)
 arch=('any')
-license=('MIT')
+license=('GPL')
 url="https://github.com/communitybig/${pkgname}"
-source=("git+${url}.git")
-md5sums=('SKIP')
-
-# Automatically detect and use the correct install file
-if [ -e "${pkgname}.install" ]; then
-    install=${pkgname}.install
-elif [ -e "pkgbuild.install" ]; then
-    install=pkgbuild.install
-fi
+source=("usr/share/backgrounds/community/*" "LICENSE" "README.md")
+md5sums=('SKIP' 'SKIP' 'SKIP')
 
 prepare() {
     cd "${srcdir}/${pkgname}"
-    # Add any preparation steps here, if needed
-    # For example: patch -p1 < "${srcdir}/patch-file.patch"
+    # No preparation steps needed
 }
 
 build() {
     cd "${srcdir}/${pkgname}"
-    # Add build steps here, if needed
-    # For example: make
-}
-
-check() {
-    cd "${srcdir}/${pkgname}"
-    # Add check/test steps here, if needed
-    # For example: make check
+    # No build steps needed
 }
 
 package() {
-    cd "${srcdir}/${pkgname}"
+    cd "${srcdir}"
 
-    # Determine the correct source directory
-    if [ -d "${pkgname}" ]; then
-        srcdir="${srcdir}/${pkgname}/${pkgname}"
-    else
-        srcdir="${srcdir}/${pkgname}"
-    fi
+    # Create target directories
+    install -dm755 "${pkgdir}/usr/share/hypr"
+    install -dm755 "${pkgdir}/usr/share/backgrounds/community"
 
-    # Install files
-    local dirs=("usr" "etc" "opt")
-    for dir in "${dirs[@]}"; do
-        if [ -d "${srcdir}/${dir}" ]; then
-            cp -a "${srcdir}/${dir}" "${pkgdir}/"
-        fi
+    # Copy all wallpapers to /usr/share/backgrounds/community
+    cp -a usr/share/backgrounds/community/* "${pkgdir}/usr/share/backgrounds/community/"
+
+    # Create wall*.png files using animal-hpr-001.jpg
+    for i in {0..2}; do
+        install -m644 usr/share/backgrounds/community/animal-hpr-001.jpg "${pkgdir}/usr/share/hypr/wall${i}.png"
     done
 
     # Install license file if present
