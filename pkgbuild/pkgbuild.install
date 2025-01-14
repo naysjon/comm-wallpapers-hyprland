@@ -12,17 +12,17 @@
 # }
 
 # Function executed after package installation
-post_install() {
-    echo "Overwriting existing Hyprland wallpapers..."
-
-    # Change Default Wallpaper
-
-    for i in {0..2}; do
-        cp -f /usr/share/backgrounds/community/animal-hpr-default.png "/usr/share/hypr/wall${i}.png"
-    done
-
-    echo "Hyprland wallpapers updated successfully."
-}
+#post_install() {
+#    echo "Overwriting existing Hyprland wallpapers..."
+#
+#    # Change Default Wallpaper
+#
+#    for i in {0..2}; do
+#        cp -f /usr/share/backgrounds/community/animal-hpr-default.png "/usr/share/hypr/wall${i}.png"
+#    done
+#
+#    echo "Hyprland wallpapers updated successfully."
+#}
 
 # Function executed before package upgrade
 # pre_upgrade() {
@@ -51,7 +51,7 @@ post_remove() {
     echo "Removing custom Hyprland wallpapers..."
 
     # Remove all custom wallpapers matching the pattern
-    rm -f /usr/share/backgrounds/community/animal-hpr-*
+    find /usr/share/backgrounds/community -type f -name 'animal-hpr-*' ! -name 'animal-hpr-001.avif' -exec rm -f {} +
 
     echo "Custom Hyprland wallpapers removed successfully."
 }
