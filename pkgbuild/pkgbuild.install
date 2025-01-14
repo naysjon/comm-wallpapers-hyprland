@@ -15,9 +15,10 @@
 post_install() {
     echo "Overwriting existing Hyprland wallpapers..."
 
-    # Overwrite existing wall*.png files with animal-hpr-001.jpg
+    # Overwrite existing wall*.png files with resized animal-hpr-001.jpg
     for i in {0..2}; do
-        cp -f /usr/share/backgrounds/community/animal-hpr-001.jpg "/usr/share/hypr/wall${i}.png"
+        convert /usr/share/backgrounds/community/animal-hpr-001.jpg \
+                -resize 7680x4320 "/usr/share/hypr/wall${i}.png"
     done
 
     echo "Hyprland wallpapers updated successfully."
