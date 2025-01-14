@@ -33,9 +33,9 @@
 
 # Function executed after package upgrade
 
-post_upgrade() {
-    post_install
-}
+#post_upgrade() {
+#    post_install
+#}
 
 
 # Function executed before package removal
