@@ -47,11 +47,11 @@ post_upgrade() {
 # }
 
 # Function executed after package removal
-# post_remove() {
-#     echo "Cleaning up after package removal..."
-    # Example: Remove data directories created by the package
-    # rm -rf /var/lib/mypackage
+post_remove() {
+    echo "Removing custom Hyprland wallpapers..."
 
-#     echo "If you want to remove all user data, run:"
-#     echo "rm -rf /home/*/mypackage_data"
-# }
+    # Remove all custom wallpapers matching the pattern
+    rm -f /usr/share/backgrounds/community/animal-hpr-*
+
+    echo "Custom Hyprland wallpapers removed successfully."
+}
