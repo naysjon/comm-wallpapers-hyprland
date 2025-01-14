@@ -30,11 +30,20 @@ build() {
 package() {
     cd "${srcdir}/${pkgname}"
 
-    # Create target directories
-    install -dm755 "${pkgdir}/usr/share/hypr"
-    install -dm755 "${pkgdir}/usr/share/backgrounds/community"
+    # Determine the correct source directory
+    if [ -d "${pkgname}" ]; then
+        srcdir="${srcdir}/${pkgname}/${pkgname}"
+    else
+        srcdir="${srcdir}/${pkgname}"
+    fi
 
-    cp -af . "${pkgdir}/usr/share/backgrounds/community/"
+    # Install files
+    local dirs=("usr" "etc" "opt")
+    for dir in "${dirs[@]}"; do
+        if [ -d "${srcdir}/${dir}" ]; then
+            cp -a "${srcdir}/${dir}" "${pkgdir}/"
+        fi
+    done
 
     # Install license file if present
     if [ -f "LICENSE" ]; then
