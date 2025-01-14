@@ -34,9 +34,6 @@ package() {
     install -dm755 "${pkgdir}/usr/share/hypr"
     install -dm755 "${pkgdir}/usr/share/backgrounds/community"
 
-    # Copy all wallpapers to /usr/share/backgrounds/community
-    rsync -a --ignore-existing usr/share/backgrounds/community/ "${pkgdir}/usr/share/backgrounds/community/"
-    
     # Install license file if present
     if [ -f "LICENSE" ]; then
         install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
